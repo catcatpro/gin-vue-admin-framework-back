@@ -1,32 +1,15 @@
 package mysql
 
 import (
-	"fmt"
-	"gin_vue_admin_framework/configs"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"gin_vue_admin_framework/pkg/Db/mysql"
+	"testing"
 )
 
-var Db *gorm.DB
+func TestConnect(t *testing.T) {
 
-func connect() *gorm.DB {
-	//处理配置
-	config := configs.SystemConfigs.Database
-	address := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		config.User,
-		config.Password,
-		config.Host,
-		config.Port,
-		config.Database)
-	//连接
-	db, err := gorm.Open(mysql.Open(address), &gorm.Config{})
+	test_db := mysql.Db
 
-	if err != nil {
-		panic("Connect failed, check your database configuration. Error: " + err.Error())
+	if test_db == nil {
+		t.Error("db is nil")
 	}
-	return db
-}
-
-func init() {
-	Db = connect()
 }
