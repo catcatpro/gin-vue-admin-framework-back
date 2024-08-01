@@ -11,7 +11,6 @@ func init() {
 }
 
 func StartWebServer() {
-	routes.Init()
 	r := routes.Router
 
 	webServer := &http.Server{
