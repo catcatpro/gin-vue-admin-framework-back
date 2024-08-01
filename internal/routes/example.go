@@ -11,6 +11,7 @@ func LoadExampleRoutes(r *gin.Engine) *gin.RouterGroup {
 	exampleGroup := r.Group("/example")
 	{
 		exampleGroup.GET("/index", exampleController.IndexAction)
+		exampleGroup.GET("/test_session", exampleController.TestSessionAction)
 	}
 	return exampleGroup
 }
