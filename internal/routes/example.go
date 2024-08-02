@@ -5,13 +5,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type ExampleRouter struct {
+}
+
 var exampleController *controllers.ExampleController = new(controllers.ExampleController)
 
-func LoadExampleRoutes(r *gin.Engine) *gin.RouterGroup {
-	exampleGroup := r.Group("/example")
+func (e *ExampleRouter) initRouter(PublicRouter *gin.RouterGroup, PrivateRouter *gin.RouterGroup) {
+	authRouter := PrivateRouter.Group("example")
+	exampleGroup := PublicRouter.Group("example")
 	{
 		exampleGroup.GET("/index", exampleController.IndexAction)
 		exampleGroup.GET("/test_session", exampleController.TestSessionAction)
 	}
-	return exampleGroup
+	{
+		authRouter.GET("/index", exampleController.IndexAction)
+	}
+
 }
