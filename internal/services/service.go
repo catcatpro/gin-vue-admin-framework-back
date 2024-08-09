@@ -1,7 +1,7 @@
 package services
 
 import (
-	"gin_vue_admin_framework/pkg/Db/mysql"
+	"gin_vue_admin_framework/utils/gorm"
 )
 
-var db = mysql.Db
+var db = gorm.Db
