@@ -1,4 +1,4 @@
-package mysql
+package utils
 
 import (
 	"gin_vue_admin_framework/cmd"

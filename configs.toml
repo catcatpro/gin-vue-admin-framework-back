@@ -14,6 +14,6 @@ issuer = 'server'
 
 [redis]
 host = '127.0.0.1'
-pprt = '6379'
+port = '6379'
 password = ''
-db = 'db1'
+db = 1

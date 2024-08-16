@@ -11,5 +11,5 @@ func main() {
 	fmt.Println("TOO")
 
 	//web服务器
-	cmd.StartWebServer()
+	cmd.RunServer()
 }

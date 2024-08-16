@@ -10,7 +10,8 @@ func init() {
 
 }
 
-func StartWebServer() {
+func startWebServer() {
+
 	r := routes.Router
 
 	webServer := &http.Server{
@@ -21,4 +22,9 @@ func StartWebServer() {
 		log.Fatalf("webserver listen error: %s\n", err)
 	}
 
+}
+
+func RunServer() {
+	InitSystem()
+	startWebServer()
 }

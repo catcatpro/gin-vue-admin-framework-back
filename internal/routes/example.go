@@ -14,7 +14,7 @@ func (e *ExampleRouter) initRouter(PublicRouter *gin.RouterGroup, PrivateRouter 
 	authRouter := PrivateRouter.Group("example")
 	exampleGroup := PublicRouter.Group("example")
 	{
-		exampleGroup.GET("/index", exampleController.IndexAction)
+		exampleGroup.GET("/", exampleController.IndexAction)
 		exampleGroup.GET("/test_session", exampleController.TestSessionAction)
 	}
 	{
