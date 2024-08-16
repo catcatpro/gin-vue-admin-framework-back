@@ -1,4 +1,4 @@
-package gorm
+package utils
 
 import (
 	"fmt"
@@ -7,9 +7,15 @@ import (
 	"gorm.io/gorm"
 )
 
+type DbInterface interface {
+	connect() *gorm.DB
+}
+
 var Db *gorm.DB
 
-func Connect() *gorm.DB {
+type MysqlDB struct{}
+
+func (m MysqlDB) connect() *gorm.DB {
 	//处理配置
 
 	config := configs.SystemConfigs.Database
@@ -30,6 +36,14 @@ func Connect() *gorm.DB {
 	return db
 }
 
-func init() {
-	Db = Connect()
+func connectIng() *gorm.DB {
+	var db DbInterface
+
+	db = MysqlDB{}
+
+	return db.connect()
+}
+
+func InitDB() {
+	Db = connectIng()
 }

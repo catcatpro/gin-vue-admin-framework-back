@@ -1,13 +1,14 @@
 package mysql
 
 import (
-	"gin_vue_admin_framework/utils/gorm"
+	"gin_vue_admin_framework/cmd"
+	"gin_vue_admin_framework/utils"
 	"testing"
 )
 
 func TestConnect(t *testing.T) {
-
-	test_db := gorm.Db
+	cmd.InitSystem()
+	test_db := utils.Db
 
 	if test_db == nil {
 		t.Error("db is nil")
