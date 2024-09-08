@@ -39,7 +39,7 @@ func (j *JWT) CreateClaims(id uint, username string) *CustomClaims {
 }
 
 /**
-*生成jwt.token
+* 生成jwt.token
  */
 func (j *JWT) CreateToken(claims *CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

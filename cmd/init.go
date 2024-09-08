@@ -11,6 +11,5 @@ func InitSystem() {
 		configs.InitConfig()
 		utils.InitDB()
 		utils.InitRedis()
-		utils.InitRedis()
 	}
 }
