@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"gin_vue_admin_framework/configs"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -17,7 +18,6 @@ type MysqlDB struct{}
 
 func (m MysqlDB) connect() *gorm.DB {
 	//处理配置
-
 	config := configs.SystemConfigs.Database
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		config.User,

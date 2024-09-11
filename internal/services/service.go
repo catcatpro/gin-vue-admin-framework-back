@@ -1,7 +1,7 @@
 package services
 
 import (
-	"gin_vue_admin_framework/utils/gorm"
+	"gin_vue_admin_framework/utils"
 )
 
-var db = gorm.Db
+var db = utils.Db

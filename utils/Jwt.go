@@ -3,9 +3,10 @@ package utils
 import (
 	"errors"
 	"gin_vue_admin_framework/configs"
-	"github.com/golang-jwt/jwt/v5"
 	"strconv"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type JWT struct {
