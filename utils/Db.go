@@ -25,7 +25,7 @@ func (m MysqlDB) connect() *gorm.DB {
 		config.Host,
 		config.Port,
 		config.Database)
-	fmt.Println(dsn)
+	// fmt.Println(dsn)
 
 	//连接
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
