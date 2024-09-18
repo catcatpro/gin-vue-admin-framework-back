@@ -9,7 +9,7 @@ import (
 
 type CommmonService struct{}
 
-func (cs *CommmonService) Login(UserReq *requests.LoginRequest) (string, error) {
+func (cs *CommmonService) Login(UserReq *requests.SysLoginRequest) (string, error) {
 	var cap utils.CaptchaInterface
 	cap = new(utils.Captcha)
 	//TODO 验证码验证

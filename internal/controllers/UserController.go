@@ -11,7 +11,7 @@ import (
 type UserController struct{}
 
 func (UserController *UserController) LoginAction(c *gin.Context) {
-	loginInfo := requests.LoginRequest{}
+	loginInfo := requests.SysLoginRequest{}
 	err := c.ShouldBind(&loginInfo)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{

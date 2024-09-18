@@ -1,6 +1,6 @@
 package requests
 
-type LoginRequest struct {
+type SysLoginRequest struct {
 	Username  string `json:"username" form:"username" binding:"required"`
 	Password  string `json:"password" form:"password" binding:"required"`
 	Captcha   string `json:"captcha" form:"captcha" binding:"required"`
