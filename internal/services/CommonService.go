@@ -4,15 +4,17 @@ import (
 	"errors"
 	"gin_vue_admin_framework/internal/models"
 	"gin_vue_admin_framework/internal/models/requests"
+	"gin_vue_admin_framework/utils"
 )
 
 type CommmonService struct{}
 
-func (cs *CommmonService) Login(UserReq *requests.LoginRequest) (bool, error) {
-
-	//TODO 临时验证码验证
-	if UserReq.Captcha != "2333" {
-		return false, errors.New("Incorrect Captcha")
+func (cs *CommmonService) Login(UserReq *requests.LoginRequest) (string, error) {
+	var cap utils.CaptchaInterface
+	cap = new(utils.Captcha)
+	//TODO 验证码验证
+	if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); err != nil || !res {
+		return "", err
 	}
 
 	var userInfo models.User
@@ -21,7 +23,17 @@ func (cs *CommmonService) Login(UserReq *requests.LoginRequest) (bool, error) {
 
 	//执行登录验证
 	if !userInfo.UserLogin() {
-		return false, errors.New("Username or Password incorrect")
+		return "", errors.New("Username or Password incorrect")
 	}
-	return true, nil
+
+	j := utils.NewJWT()
+
+	//TODO userInfo.ID
+	claims := j.CreateClaims(1, userInfo.Username)
+	token, err := j.CreateToken(claims)
+
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }

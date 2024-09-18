@@ -25,5 +25,6 @@ func init() {
 	//加载路由
 	{
 		new(ExampleRouter).initRouter(publicRouter, privateRouter)
+		new(UserRouter).initRouter(publicRouter, privateRouter)
 	}
 }

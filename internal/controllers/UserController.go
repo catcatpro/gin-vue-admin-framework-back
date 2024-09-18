@@ -10,31 +10,34 @@ import (
 
 type UserController struct{}
 
-func (UserController *UserController) Login(c *gin.Context) {
-	var loginInfo requests.LoginRequest
-	if c.ShouldBind(&loginInfo) != nil {
-		cs := services.CommmonService{}
-		_, err := cs.Login(&loginInfo)
-		if err != nil {
-			// c.JSON(http.StatusUnauthorized, gin.H{
-			// 	"status": "error",
-			// 	"msg":    err.Error(),
-			// 	"data":   "{}",
-			// })
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"status": "error",
-				"msg":    err.Error(),
-				"data":   "{}",
-			})
-		}
-
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-			"msg":    "success",
+func (UserController *UserController) LoginAction(c *gin.Context) {
+	loginInfo := requests.LoginRequest{}
+	err := c.ShouldBind(&loginInfo)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"status": "error",
+			"msg":    "Server error occured!",
 			"data":   "{}",
 		})
-	} else {
-		c.JSON(http.StatusInternalServerError, nil)
+
+		return
 	}
+	cs := services.CommmonService{}
+	token, err := cs.Login(&loginInfo)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"status": "error",
+			"msg":    err.Error(),
+			"data":   "{}",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"msg":    "success",
+		"data": gin.H{
+			"token": token,
+		},
+	})
 
 }
