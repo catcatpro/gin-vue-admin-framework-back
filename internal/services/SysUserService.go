@@ -7,12 +7,12 @@ import (
 	"gin_vue_admin_framework/utils"
 )
 
-type CommmonService struct{}
+type SysUserService struct{}
 
-func (cs *CommmonService) Login(UserReq *requests.SysLoginRequest) (string, error) {
-	var cap utils.CaptchaInterface
-	cap = new(utils.Captcha)
-	//TODO 验证码验证
+func (cs *SysUserService) Login(UserReq *requests.SysLoginRequest) (string, error) {
+	var cap utils.CaptchaInterfaceV2
+	cap = new(utils.CaptchaV2)
+	//验证码验证
 	if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); err != nil || !res {
 		return "", err
 	}
