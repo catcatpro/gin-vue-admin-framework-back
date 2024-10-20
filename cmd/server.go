@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"gin_vue_admin_framework/initialize"
 	"gin_vue_admin_framework/internal/routes"
 	"log"
 	"net/http"
@@ -25,6 +26,6 @@ func startWebServer() {
 }
 
 func RunServer() {
-	InitSystem()
+	initialize.InitSystem()
 	startWebServer()
 }

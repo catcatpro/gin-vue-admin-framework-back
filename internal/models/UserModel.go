@@ -1,20 +1,29 @@
 package models
 
+import (
+	"fmt"
+	"gin_vue_admin_framework/common"
+)
+
 type User struct {
-	Basic
+	*Basic
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
+
+// func (User) TableName() string {
+// 	return "user"
+// }
 
 /**
 *用户登录
 **/
 func (u *User) UserLogin() bool {
-	//TODO 登录逻辑 -- 查询数据库
+	var res User
+	fmt.Println("username ")
+	common.COM_DB.Table("user").Where("username = ?", u.Username).Where("password", u.Password).First(&res)
+	// 临时登录逻辑
+	fmt.Println("username " + res.Username + " password " + res.Password)
 
-	//TODO 临时登录逻辑
-	if u.Username != "admin" && u.Password != "admin" {
-		return false
-	}
-	return true
+	return res.Username != ""
 }

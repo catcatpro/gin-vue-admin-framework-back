@@ -8,8 +8,8 @@ import (
 type SysService struct {
 }
 
-func (ss SysService) GenerateCaptcha() (sc system.SysCaptcha, err error) {
-	var s_captcha system.SysCaptcha
+func (ss SysService) GenerateCaptcha() (sc system.SysCaptchaModel, err error) {
+	var s_captcha system.SysCaptchaModel
 
 	var cap utils.CaptchaInterfaceV2
 	cap = new(utils.CaptchaV2)

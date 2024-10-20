@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -39,6 +40,7 @@ func InitConfig() {
 	}
 	// return &configs
 	SystemConfigs = &configs
+	fmt.Println("test" + SystemConfigs.Database.Prefix)
 }
 
 // func init() {

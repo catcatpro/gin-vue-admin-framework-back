@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"gin_vue_admin_framework/internal/middlewares"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +18,7 @@ func init() {
 	privateRouter := Router.Group("")
 	//中间件
 	{
-
+		privateRouter.Use(middlewares.AuthRequired())
 	}
 	//middleware.HandleSession(Router)
 	//store := Session.InitSession()

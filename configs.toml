@@ -5,7 +5,7 @@ port = 3306
 user = 'root'
 password = 'root'
 database = 'gin_vue_admin_framework'
-prefix = ''
+prefix = 'gvaf'
 
 [jwt]
 secret = 'zYn2Kk0ouZ0qYh*J68@msM!AHs^()@A@OAK!3+_a2c5v5kt8^hsR'

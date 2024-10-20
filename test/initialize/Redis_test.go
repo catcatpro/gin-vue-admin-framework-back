@@ -2,16 +2,16 @@ package utils
 
 import (
 	"context"
-	"gin_vue_admin_framework/configs"
-	"gin_vue_admin_framework/utils"
+	"gin_vue_admin_framework/common"
+	"gin_vue_admin_framework/initialize"
 	"testing"
 	"time"
 )
 
 func TestRedis(t *testing.T) {
-	configs.InitConfig()
-	utils.InitRedis()
-	test_rdb := utils.Rdb
+	// configs.InitConfig()
+	initialize.InitSystem()
+	test_rdb := common.COM_REDIS
 	if test_rdb == nil {
 		t.Error("rdb is nil")
 	}

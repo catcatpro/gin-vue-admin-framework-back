@@ -6,4 +6,5 @@ type Database struct {
 	Host     string
 	Port     uint
 	Database string
+	Prefix   string
 }

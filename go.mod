@@ -9,7 +9,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/redis/go-redis/v9 v9.6.1
 	gorm.io/driver/mysql v1.5.6
-	gorm.io/gorm v1.25.10
+	gorm.io/gorm v1.25.12
 )
 
 require (

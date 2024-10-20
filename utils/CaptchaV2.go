@@ -23,7 +23,7 @@ var store = base64Captcha.DefaultMemStore
  */
 type CaptchaInterfaceV2 interface {
 	Generate() (id, base64str string, err error)
-	Verify(id string, awaer string) (bool, error)
+	Verify(id string, awaer string) (res bool, err error)
 }
 
 type CaptchaV2 struct {
