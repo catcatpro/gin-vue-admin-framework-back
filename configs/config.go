@@ -1,7 +1,6 @@
 package configs
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -24,8 +23,8 @@ func InitConfig() {
 	}
 	viper.SetConfigName("configs")
 	viper.SetConfigType("toml")
-	viper.AddConfigPath("/mnt/d/projects/golang/src/gin-vue-admin-framework-back")
-	// viper.AddConfigPath(path)
+	// viper.AddConfigPath("/mnt/d/projects/golang/src/gin-vue-admin-framework-back")
+	viper.AddConfigPath(path)
 
 	err = viper.ReadInConfig()
 	if err != nil {
@@ -40,7 +39,7 @@ func InitConfig() {
 	}
 	// return &configs
 	SystemConfigs = &configs
-	fmt.Println("test" + SystemConfigs.Database.Prefix)
+	// fmt.Println("test" + SystemConfigs.Database.Prefix)
 }
 
 // func init() {

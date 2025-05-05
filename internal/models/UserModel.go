@@ -21,7 +21,8 @@ type User struct {
 func (u *User) UserLogin() bool {
 	var res User
 	fmt.Println("username ")
-	common.COM_DB.Table("user").Where("username = ?", u.Username).Where("password", u.Password).First(&res)
+	// u.Basic.
+	common.COM_DB.Where("username = ?", u.Username).Where("password", u.Password).First(&res)
 	// 临时登录逻辑
 	fmt.Println("username " + res.Username + " password " + res.Password)
 
