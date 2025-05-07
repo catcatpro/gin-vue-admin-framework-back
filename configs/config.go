@@ -23,8 +23,8 @@ func InitConfig() {
 	}
 	viper.SetConfigName("configs")
 	viper.SetConfigType("toml")
-	// viper.AddConfigPath("/mnt/d/projects/golang/src/gin-vue-admin-framework-back")
-	viper.AddConfigPath(path)
+	viper.AddConfigPath("/home/catcatproer/go/src/gin-vue-admin-framework-back")
+	// viper.AddConfigPath(path)
 
 	err = viper.ReadInConfig()
 	if err != nil {

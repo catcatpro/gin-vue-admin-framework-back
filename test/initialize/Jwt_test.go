@@ -1,4 +1,4 @@
-package utils
+package initialize_test
 
 import (
 	"context"
