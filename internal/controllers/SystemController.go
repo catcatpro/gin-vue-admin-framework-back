@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"gin_vue_admin_framework/internal/models/requests"
 
 	"gin_vue_admin_framework/internal/services"
@@ -17,14 +18,16 @@ func (sc *SystemController) SysLoginAction(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status": "error",
-			"msg":    "Server error occured!",
+			"msg":    "Parameter error",
 			"data":   "{}",
 		})
 
 		return
 	}
+	fmt.Println(loginInfo)
 	cs := services.SysUserService{}
 	token, err := cs.Login(&loginInfo)
+
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"status": "error",

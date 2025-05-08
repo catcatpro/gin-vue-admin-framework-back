@@ -10,12 +10,12 @@ import (
 type SysUserService struct{}
 
 func (cs *SysUserService) Login(UserReq *requests.SysLoginRequest) (string, error) {
-	// var cap utils.CaptchaInterfaceV2
-	// cap = new(utils.CaptchaV2)
+	var cap utils.CaptchaInterfaceV2
+	cap = new(utils.CaptchaV2)
 	//验证码验证
-	// if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); err != nil || !res {
-	// 	return "", err
-	// }
+	if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); err != nil || !res {
+		return "", err
+	}
 
 	var userInfo models.User
 	userInfo.Username = UserReq.Username
