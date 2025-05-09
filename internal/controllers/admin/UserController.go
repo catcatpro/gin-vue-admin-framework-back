@@ -1,4 +1,4 @@
-package controllers
+package adminControllers
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 
 type UserController struct{}
 
-func (sc *SystemController) SysLoginAction(c *gin.Context) {
+func (sc *UserController) SysLoginAction(c *gin.Context) {
 	loginInfo := requests.SysLoginRequest{}
 	err := c.ShouldBind(&loginInfo)
 	if err != nil {
