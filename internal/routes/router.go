@@ -2,6 +2,7 @@ package routes
 
 import (
 	"gin_vue_admin_framework/internal/middlewares"
+	AdminRoutes "gin_vue_admin_framework/internal/routes/admin"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,8 @@ func init() {
 
 	//加载路由
 	{
-		new(ExampleRouter).initRouter(publicRouter, privateRouter)
-		new(SystemRouter).initRouter(publicRouter, privateRouter)
+		new(ExampleRouter).InitRouter(publicRouter, privateRouter)
+		new(SystemRouter).InitRouter(publicRouter, privateRouter)
+		new(AdminRoutes.AdminUserRouter).InitRouter(publicRouter, privateRouter)
 	}
 }
