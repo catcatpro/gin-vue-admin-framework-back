@@ -10,7 +10,7 @@ type ExampleRouter struct {
 
 var exampleController *controllers.ExampleController = new(controllers.ExampleController)
 
-func (e *ExampleRouter) initRouter(PublicRouter *gin.RouterGroup, PrivateRouter *gin.RouterGroup) {
+func (e *ExampleRouter) InitRouter(PublicRouter *gin.RouterGroup, PrivateRouter *gin.RouterGroup) {
 	authRouter := PrivateRouter.Group("example")
 	exampleGroup := PublicRouter.Group("example")
 	{
