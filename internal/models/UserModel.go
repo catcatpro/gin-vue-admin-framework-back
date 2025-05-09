@@ -15,9 +15,7 @@ type User struct {
 // 	return "user"
 // }
 
-/**
-*用户登录
-**/
+// 用户登录
 func (u *User) UserLogin() bool {
 	var res User
 	fmt.Println(u.Username, u.Password)
