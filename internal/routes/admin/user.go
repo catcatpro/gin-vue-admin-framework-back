@@ -10,7 +10,7 @@ type AdminUserRouter struct{}
 var adminUserController = new(adminControllers.UserController)
 
 func (ur *AdminUserRouter) InitRouter(PublicRouter *gin.RouterGroup, PrivateRouter *gin.RouterGroup) {
-	adminUserGroup := PublicRouter.Group("admin_user")
+	adminUserGroup := PublicRouter.Group("admin/user")
 	{
 		adminUserGroup.POST("login", adminUserController.SysLoginAction)
 	}
