@@ -13,6 +13,6 @@ var adminUserController = new(adminControllers.UserController)
 func (ur *AdminUserRoutes) InitRouter(PublicRouter *gin.RouterGroup, PrivateRouter *gin.RouterGroup) {
 	adminUserGroup := PublicRouter.Group("admin/user")
 	{
-		adminUserGroup.POST("login", adminUserController.SysLoginAction)
+		adminUserGroup.POST("login", adminUserController.LoginAction)
 	}
 }

@@ -11,8 +11,8 @@ import (
 
 type UserController struct{}
 
-func (sc *UserController) SysLoginAction(c *gin.Context) {
-	loginInfo := requests.SysLoginRequest{}
+func (uc *UserController) LoginAction(c *gin.Context) {
+	loginInfo := requests.LoginRequest{}
 	err := c.ShouldBind(&loginInfo)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
@@ -42,5 +42,9 @@ func (sc *UserController) SysLoginAction(c *gin.Context) {
 			"token": token,
 		},
 	})
+
+}
+
+func (uc *UserController) CreateUserAction(c *gin.Context) {
 
 }
