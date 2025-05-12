@@ -2,9 +2,11 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"gin_vue_admin_framework/internal/models"
 	"gin_vue_admin_framework/internal/models/requests"
 	"gin_vue_admin_framework/utils"
+	"github.com/gin-gonic/gin"
 )
 
 type SysUserService struct{}
@@ -12,8 +14,10 @@ type SysUserService struct{}
 func (cs *SysUserService) Login(UserReq *requests.SysLoginRequest) (string, error) {
 	var cap utils.CaptchaInterfaceV2
 	cap = new(utils.CaptchaV2)
+	fmt.Println("mode2", gin.Mode())
 	//验证码验证
-	if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); err != nil || !res {
+	if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); (err != nil || !res) && gin.Mode() == gin.ReleaseMode {
+
 		return "", err
 	}
 

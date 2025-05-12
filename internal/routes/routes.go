@@ -29,6 +29,6 @@ func init() {
 	{
 		new(ExampleRouter).InitRouter(publicRouter, privateRouter)
 		new(SystemRouter).InitRouter(publicRouter, privateRouter)
-		new(AdminRoutes.AdminUserRouter).InitRouter(publicRouter, privateRouter)
+		new(AdminRoutes.AdminUserRoutes).InitRouter(publicRouter, privateRouter)
 	}
 }

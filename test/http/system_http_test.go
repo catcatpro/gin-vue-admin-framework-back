@@ -1,8 +1,10 @@
 package http_test
 
 import (
+	"fmt"
 	"gin_vue_admin_framework/initialize"
 	"gin_vue_admin_framework/internal/routes"
+	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -11,10 +13,16 @@ import (
 	"testing"
 )
 
-func TestSysLogin(t *testing.T) {
+var r *gin.Engine
+
+func init() {
 	initialize.InitSystem()
 
-	r := routes.Router
+	r = routes.Router
+}
+
+func TestSysLogin(t *testing.T) {
+	fmt.Println("mode", gin.Mode())
 	postData := url.Values{
 		"username":   {"admin"},
 		"password":   {"123456"},
@@ -23,7 +31,7 @@ func TestSysLogin(t *testing.T) {
 	}
 
 	reqBody := strings.NewReader(postData.Encode())
-	req, err := http.NewRequest("POST", "/public/sys/login", reqBody)
+	req, err := http.NewRequest("POST", "/public/admin/user/login", reqBody)
 	if err != nil {
 		t.Fatal("http.NewRequest error:", err)
 	}
@@ -42,5 +50,5 @@ func TestSysLogin(t *testing.T) {
 	}
 
 	defer res.Body.Close()
-	
+
 }
