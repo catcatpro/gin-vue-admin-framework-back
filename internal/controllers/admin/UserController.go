@@ -46,5 +46,34 @@ func (uc *UserController) LoginAction(c *gin.Context) {
 }
 
 func (uc *UserController) CreateUserAction(c *gin.Context) {
+	createUser := requests.CreateUserRequest{}
+	err := c.ShouldBind(&createUser)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"status": "error",
+			"msg":    "Parameter error",
+			"data":   "{}",
+		})
+
+		return
+	}
+
+	cs := services.SysUserService{}
+	err = cs.CreateUser(&createUser)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"status": "error",
+			"msg":    err.Error(),
+			"data":   "{}",
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"msg":    "success",
+		"data":   "{}",
+	})
 
 }
