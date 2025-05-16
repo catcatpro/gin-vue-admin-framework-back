@@ -14,5 +14,11 @@ func (ur *AdminUserRoutes) InitRouter(PublicRouter *gin.RouterGroup, PrivateRout
 	adminUserGroup := PublicRouter.Group("admin/user")
 	{
 		adminUserGroup.POST("login", adminUserController.LoginAction)
+		adminUserGroup.POST("test_create", adminUserController.CreateUserAction)
+	}
+
+	adminUserPrivateGroup := PrivateRouter.Group("admin/user")
+	{
+		adminUserPrivateGroup.POST("create", adminUserController.CreateUserAction)
 	}
 }
