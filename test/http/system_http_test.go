@@ -50,5 +50,4 @@ func TestSysLogin(t *testing.T) {
 	}
 
 	defer res.Body.Close()
-
 }
