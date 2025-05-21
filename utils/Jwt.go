@@ -39,14 +39,13 @@ func (j *JWT) CreateClaims(id uint, username string) *CustomClaims {
 	}
 }
 
-/**
-* 生成jwt.token
- */
+// 生成jwt.token
 func (j *JWT) CreateToken(claims *CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.secret)
 }
 
+// 解析token
 func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 	claims := &CustomClaims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
