@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"context"
+	"gin_vue_admin_framework/common"
 	"gin_vue_admin_framework/initialize"
 	"gin_vue_admin_framework/internal/routes"
 	"github.com/gin-gonic/gin"
@@ -33,6 +35,17 @@ func TestCreateUser(t *testing.T) {
 		t.Fatal("http.NewRequest error:", err)
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	rdb := common.COM_REDIS
+	if rdb == nil {
+		t.Error("rdb is nil")
+	}
+	ctx := context.Background()
+	token, err := rdb.Get(ctx, "x-header-token").Result()
+	if err != nil {
+		t.Error(err)
+	}
+	req.Header.Set("x-header-token", token)
 
 	rec := httptest.NewRecorder()
 
