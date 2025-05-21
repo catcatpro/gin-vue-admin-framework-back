@@ -1,7 +1,10 @@
 package http_test
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
+	"gin_vue_admin_framework/common"
 	"gin_vue_admin_framework/initialize"
 	"gin_vue_admin_framework/internal/routes"
 	"github.com/gin-gonic/gin"
@@ -11,7 +14,17 @@ import (
 	"net/url"
 	"strings"
 	"testing"
+	"time"
 )
+
+type tokenResponseData struct {
+	Token string `json:"token"`
+}
+type tokenResponse struct {
+	Data   tokenResponseData `json:"data"`
+	Status string            `json:"status"`
+	Msg    string            `json:"msg"`
+}
 
 var r *gin.Engine
 
@@ -49,5 +62,19 @@ func TestSysLogin(t *testing.T) {
 		t.Fatalf("status code error,want %d,got %d, msg: %v", http.StatusOK, res.StatusCode, resBodyString)
 	}
 
+	println("resBody:", resBodyString)
+	var parseResp tokenResponse
+	if err := json.Unmarshal(resBody, &parseResp); err != nil {
+		t.Fatal("json.Unmarshal error:", err)
+	}
+	rdb := common.COM_REDIS
+	if rdb == nil {
+		t.Error("rdb is nil")
+	}
+	ctx := context.Background()
+	_, err = rdb.Set(ctx, "x-header-token", parseResp.Data.Token, time.Duration(7)*24*time.Hour).Result()
+	if err != nil {
+		t.Error(err)
+	}
 	defer res.Body.Close()
 }
