@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	"errors"
 	"gin_vue_admin_framework/common"
 	"gin_vue_admin_framework/utils"
 )
@@ -18,11 +18,11 @@ type User struct {
 
 // 用户登录
 func (u *User) UserLogin() error {
-	//var user User
-	fmt.Println(u.Username, u.Password)
-	u.Password, _ = utils.HashPassword(u.Password)
-	res := common.COM_DB.Where("username = ?", u.Username).Where("password", u.Password).First(&u)
-	// 临时登录逻辑
+	var password string = u.Password
+	res := common.COM_DB.Where("username = ?", u.Username).First(&u)
+	if !utils.CheckPasswordHash(password, u.Password) {
+		return errors.New("Username or Password incorrect")
+	}
 
 	return res.Error
 }
