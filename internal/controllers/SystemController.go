@@ -16,7 +16,7 @@ func (sc *SystemController) GetCaptchaAction(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status": "error",
 			"msg":    err.Error(),
-			"data":   "{}",
+			"data":   gin.H{},
 		})
 		return
 	}
