@@ -20,7 +20,7 @@ import (
 type tokenResponseData struct {
 	Token string `json:"token"`
 }
-type tokenResponse struct {
+type LoginResponse struct {
 	Data   tokenResponseData `json:"data"`
 	Status string            `json:"status"`
 	Msg    string            `json:"msg"`
@@ -41,6 +41,7 @@ func TestSysLogin(t *testing.T) {
 		"password":   {"123456"},
 		"captcha":    {"123456"},
 		"captcha_id": {"1"},
+		"auto_login": {"null"},
 	}
 
 	reqBody := strings.NewReader(postData.Encode())
@@ -63,7 +64,7 @@ func TestSysLogin(t *testing.T) {
 	}
 
 	println("resBody:", resBodyString)
-	var parseResp tokenResponse
+	var parseResp LoginResponse
 	if err := json.Unmarshal(resBody, &parseResp); err != nil {
 		t.Fatal("json.Unmarshal error:", err)
 	}
