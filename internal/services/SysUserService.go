@@ -55,3 +55,17 @@ func (cs *SysUserService) CreateUser(req *requests.CreateUserRequest) error {
 
 	return nil
 }
+
+func (cs *SysUserService) GetUserInfo(req *requests.GetUserInfoRequest) error {
+	var err error = nil
+	switch req.Type {
+	case "token":
+		var userInfo models.User
+		err = userInfo.GetUserInfoByToken(req.Data)
+		if err != nil {
+			return err
+		}
+		break
+	}
+	return err
+}

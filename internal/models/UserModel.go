@@ -35,3 +35,14 @@ func (u *User) CreateUser() (uint, error) {
 	res := common.COM_DB.Create(&saveData)
 	return saveData.ID, res.Error
 }
+
+// 通过token获取用户信息
+func (u *User) GetUserInfoByToken(token string) error {
+	j := utils.NewJWT()
+	user, err := j.ParseToken(token)
+	if err != nil {
+		return err
+	}
+	res := common.COM_DB.Where("id = ?", user.Id).First(&u)
+	return res.Error
+}

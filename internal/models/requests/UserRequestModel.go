@@ -14,3 +14,8 @@ type CreateUserRequest struct {
 	UserRequest
 	ConfirmPassword string `json:"confirm_password" form:"confirm_password" binding:"required"`
 }
+
+type GetUserInfoRequest struct {
+	Data string `json:"data" form:"data"`
+	Type string `json:"type" form:"type" binding:"required"`
+}
