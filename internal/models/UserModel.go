@@ -21,7 +21,7 @@ func (u *User) UserLogin() error {
 	var password string = u.Password
 	res := common.COM_DB.Where("username = ?", u.Username).First(&u)
 	if !utils.CheckPasswordHash(password, u.Password) {
-		return errors.New("Username or Password incorrect")
+		return errors.New("Username or Password incorrect!")
 	}
 
 	return res.Error
