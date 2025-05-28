@@ -28,7 +28,7 @@ func (uc *UserController) LoginAction(c *gin.Context) {
 	token, err := cs.Login(&loginInfo)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status": "error",
 			"msg":    err.Error(),
 			"data":   "{}",
