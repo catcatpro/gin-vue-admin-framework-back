@@ -2,6 +2,7 @@ package adminControllers
 
 import (
 	"fmt"
+	"gin_vue_admin_framework/internal/models"
 	"gin_vue_admin_framework/internal/models/requests"
 	"gin_vue_admin_framework/internal/services"
 	"net/http"
@@ -74,6 +75,40 @@ func (uc *UserController) CreateUserAction(c *gin.Context) {
 		"status": "ok",
 		"msg":    "success",
 		"data":   "{}",
+	})
+
+}
+
+func (uc *UserController) GetUserInfoAction(c *gin.Context) {
+	var err error
+	data := requests.GetUserInfoRequest{}
+	err = c.ShouldBind(&data)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"status": "error",
+			"msg":    "Parameter error",
+			"data":   "{}",
+		})
+
+		return
+	}
+
+	var userInfo models.User
+	cs := services.SysUserService{}
+	userInfo, err = cs.GetUserInfo(&data)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"status": "error",
+			"msg":    "Parameter error",
+			"data":   "{}",
+		})
+
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"msg":    "success",
+		"data":   userInfo,
 	})
 
 }

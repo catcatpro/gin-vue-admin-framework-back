@@ -59,3 +59,37 @@ func TestCreateUser(t *testing.T) {
 
 	defer res.Body.Close()
 }
+
+func TestGetUserInfoByToken(t *testing.T) {
+	rdb := common.COM_REDIS
+	if rdb == nil {
+		t.Error("rdb is nil")
+	}
+	ctx := context.Background()
+	token, err := rdb.Get(ctx, "x-header-token").Result()
+	if err != nil {
+		t.Error(err)
+	}
+	postData := url.Values{
+		"data": {token},
+		"type": {"token"},
+	}
+	reqBody := strings.NewReader(postData.Encode())
+	req, err := http.NewRequest("POST", "/public/admin/user/get_user_info", reqBody)
+	if err != nil {
+		t.Fatal("http.NewRequest error:", err)
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	rec := httptest.NewRecorder()
+
+	r.ServeHTTP(rec, req)
+	res := rec.Result()
+	resBody, _ := io.ReadAll(res.Body)
+	resBodyString := string(resBody)
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("status code error,want %d,got %d, msg: %v", http.StatusOK, res.StatusCode, resBodyString)
+	}
+	println("resBody:", resBodyString)
+
+	defer res.Body.Close()
+}

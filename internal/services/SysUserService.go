@@ -56,16 +56,14 @@ func (cs *SysUserService) CreateUser(req *requests.CreateUserRequest) error {
 	return nil
 }
 
-func (cs *SysUserService) GetUserInfo(req *requests.GetUserInfoRequest) error {
+func (cs *SysUserService) GetUserInfo(req *requests.GetUserInfoRequest) (models.User, error) {
 	var err error = nil
+	var userInfo models.User
+
 	switch req.Type {
 	case "token":
-		var userInfo models.User
 		err = userInfo.GetUserInfoByToken(req.Data)
-		if err != nil {
-			return err
-		}
 		break
 	}
-	return err
+	return userInfo, err
 }
