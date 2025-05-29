@@ -3,5 +3,6 @@ package models
 import "gorm.io/gorm"
 
 type Basic struct {
-	gorm.Model
+	*gorm.Model
+	ID uint `json:"id" gorm:"primarykey"`
 }

@@ -43,6 +43,6 @@ func (u *User) GetUserInfoByToken(token string) error {
 	if err != nil {
 		return err
 	}
-	res := common.COM_DB.Where("id = ?", user.Id).First(&u)
+	res := common.COM_DB.Where("id = ?", user.Id).Select("id, username").First(&u)
 	return res.Error
 }
