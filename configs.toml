@@ -9,7 +9,7 @@ prefix = 'gvaf_'
 
 [jwt]
 secret = 'zYn2Kk0ouZ0qYh*J68@msM!AHs^()@A@OAK!3+_a2c5v5kt8^hsR'
-expiresAt = '7' # 有效期/天
+expiresAt = '1' # 有效期/小时
 issuer = 'server'
 
 [redis]

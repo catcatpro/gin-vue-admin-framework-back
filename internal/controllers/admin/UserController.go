@@ -36,12 +36,11 @@ func (uc *UserController) LoginAction(c *gin.Context) {
 		})
 		return
 	}
+	c.Writer.Header().Set("authorization", "Bearer "+token)
 	c.JSON(http.StatusOK, gin.H{
 		"status": "ok",
 		"msg":    "success",
-		"data": gin.H{
-			"token": token,
-		},
+		"data":   "{}",
 	})
 
 }

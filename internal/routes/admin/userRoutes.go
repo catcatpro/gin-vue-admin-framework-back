@@ -15,11 +15,11 @@ func (ur *AdminUserRoutes) InitRouter(PublicRouter *gin.RouterGroup, PrivateRout
 	{
 		adminUserGroup.POST("login", adminUserController.LoginAction)
 		adminUserGroup.POST("test_create", adminUserController.CreateUserAction)
-		adminUserGroup.POST("get_user_info", adminUserController.GetUserInfoAction)
 	}
 
 	adminUserPrivateGroup := PrivateRouter.Group("admin/user")
 	{
 		adminUserPrivateGroup.POST("create", adminUserController.CreateUserAction)
+		adminUserPrivateGroup.POST("get_user_info", adminUserController.GetUserInfoAction)
 	}
 }
