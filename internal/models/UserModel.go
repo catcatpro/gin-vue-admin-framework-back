@@ -39,7 +39,7 @@ func (u *User) CreateUser() (uint, error) {
 // 通过token获取用户信息
 func (u *User) GetUserInfoByToken(token string) error {
 	j := utils.NewJWT()
-	user, err := j.ParseToken(token)
+	user, err := j.ParseToken(token, false)
 	if err != nil {
 		return err
 	}

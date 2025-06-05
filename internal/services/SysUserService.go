@@ -10,13 +10,13 @@ import (
 
 type SysUserService struct{}
 
-func (cs *SysUserService) Login(UserReq *requests.LoginRequest) (string, error) {
+func (cs *SysUserService) Login(UserReq *requests.LoginRequest) (string, string, error) {
 	var cap utils.CaptchaInterfaceV2
 	cap = new(utils.CaptchaV2)
 	//验证码验证
 	if res, err := cap.Verify(UserReq.CaptchaId, UserReq.Captcha); (err != nil || !res) && gin.Mode() == gin.ReleaseMode {
 
-		return "", err
+		return "", "", err
 	}
 
 	var userInfo models.User
@@ -25,18 +25,44 @@ func (cs *SysUserService) Login(UserReq *requests.LoginRequest) (string, error) 
 
 	//执行登录验证
 	if err := userInfo.UserLogin(); err != nil {
-		return "", errors.New("Username or Password incorrect")
+		return "", "", errors.New("Username or Password incorrect")
 	}
 
 	j := utils.NewJWT()
 
 	claims := j.CreateClaims(userInfo.ID, userInfo.Username)
-	token, err := j.CreateToken(claims)
+	token, err := j.CreateToken(claims, false)
 
+	if err != nil {
+		return "", "", err
+	}
+
+	refresh_claims := j.CreateRefreshClaims(userInfo.ID)
+	refresh_token, err := j.CreateToken(refresh_claims, true)
+	if err != nil {
+		return "", "", err
+	}
+	return token, refresh_token, nil
+}
+
+func (cs *SysUserService) RefreshToken(RefreshReq *requests.RefreshTokenRequest) (string, error) {
+	j := utils.NewJWT()
+	claims, err := j.ParseToken(RefreshReq.RefreshToken, true)
 	if err != nil {
 		return "", err
 	}
-	return token, nil
+	//验证token是否过期？
+	_, err = j.VerifyTokenExpiresAt(RefreshReq.RefreshToken, true)
+	if err != nil {
+		return "", err
+	}
+
+	nowClaims := j.CreateRefreshClaims(claims.Id)
+	now_token, err := j.CreateToken(nowClaims, false)
+	if err != nil {
+		return "", err
+	}
+	return now_token, nil
 }
 
 func (cs *SysUserService) CreateUser(req *requests.CreateUserRequest) error {

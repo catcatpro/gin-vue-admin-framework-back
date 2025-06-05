@@ -1,7 +1,9 @@
 package configs
 
 type Jwt struct {
-	Secret    string
-	ExpiresAt string
-	Issuer    string
+	Secret           string
+	RefreshSecret    string
+	ExpiresAt        string
+	RefreshExpiresAt string
+	Issuer           string
 }

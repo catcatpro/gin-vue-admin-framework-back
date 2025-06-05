@@ -19,3 +19,7 @@ type GetUserInfoRequest struct {
 	Data string `json:"data" form:"data"`
 	Type string `json:"type" form:"type" binding:"required"`
 }
+
+type RefreshTokenRequest struct {
+	RefreshToken string `json:"refresh_token" form:"refresh_token" binding:"required"`
+}

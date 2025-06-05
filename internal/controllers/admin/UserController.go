@@ -26,7 +26,7 @@ func (uc *UserController) LoginAction(c *gin.Context) {
 	}
 	fmt.Println(loginInfo)
 	cs := services.SysUserService{}
-	token, err := cs.Login(&loginInfo)
+	token, refresh_token, err := cs.Login(&loginInfo)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
@@ -36,11 +36,42 @@ func (uc *UserController) LoginAction(c *gin.Context) {
 		})
 		return
 	}
-	c.Writer.Header().Set("authorization", "Bearer "+token)
+	//c.Writer.Header().Set("authorization", "Bearer "+token)
 	c.JSON(http.StatusOK, gin.H{
 		"status": "ok",
 		"msg":    "success",
-		"data":   "{}",
+		"data":   gin.H{"token": token, "refresh_token": refresh_token},
+	})
+}
+
+func (uc *UserController) RefreshToken(c *gin.Context) {
+	refreshToken := requests.RefreshTokenRequest{}
+	err := c.ShouldBind(&refreshToken)
+	if err != nil {
+		c.AbortWithStatusJSON(402, gin.H{
+			"status": "error",
+			"msg":    "Parameter error",
+			"data":   "{}",
+		})
+
+		return
+	}
+	cs := services.SysUserService{}
+
+	token, err := cs.RefreshToken(&refreshToken)
+	if err != nil {
+		c.AbortWithStatusJSON(402, gin.H{
+			"status": "error",
+			"msg":    err.Error(),
+			"data":   "{}",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"msg":    "success",
+		"data":   gin.H{"token": token},
 	})
 
 }
@@ -94,6 +125,8 @@ func (uc *UserController) GetUserInfoAction(c *gin.Context) {
 
 	var userInfo models.User
 	cs := services.SysUserService{}
+	token := c.GetHeader("x-header-token")
+	data.Data = token
 	userInfo, err = cs.GetUserInfo(&data)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{

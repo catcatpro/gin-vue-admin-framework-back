@@ -9,7 +9,9 @@ prefix = 'gvaf_'
 
 [jwt]
 secret = 'zYn2Kk0ouZ0qYh*J68@msM!AHs^()@A@OAK!3+_a2c5v5kt8^hsR'
-expiresAt = '1' # 有效期/小时
+refreshSecret = 'o330uf3u33jdhffryr7'
+expiresAt = '15' # token有效期: 分钟
+refreshExpiresAt = '7' # refresh_token有效期: 天
 issuer = 'server'
 
 [redis]

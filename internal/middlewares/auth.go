@@ -2,9 +2,8 @@ package middlewares
 
 import (
 	"gin_vue_admin_framework/utils"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // 登录鉴权中间件
@@ -21,7 +20,7 @@ func AuthRequired() gin.HandlerFunc {
 		}
 		j := utils.NewJWT()
 		//验证token是否有效？
-		_, err := j.ParseToken(token)
+		_, err := j.ParseToken(token, false)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"status": "error",
@@ -31,20 +30,14 @@ func AuthRequired() gin.HandlerFunc {
 			return
 		}
 		//验证token是否过期？
-		_, err = j.VerifyTokenExpiresAt(token)
+		_, err = j.VerifyTokenExpiresAt(token, false)
 		if err != nil {
-			//重新请求token
-			nowToken, err := j.RefreshToken(token)
-			if err != nil {
-				c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-					"status": "error",
-					"msg":    err.Error(),
-					"data":   "{''}",
-				})
-				return
-			}
-			c.Writer.Header().Add("authorization", "Bearer "+nowToken)
-
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"status": "error",
+				"msg":    err.Error(),
+				"data":   "{''}",
+			})
+			return
 		}
 		c.Next()
 	}
