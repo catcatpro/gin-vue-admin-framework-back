@@ -1,6 +1,7 @@
 package services
 
 import (
+	"gin_vue_admin_framework/internal/models/requests"
 	"gin_vue_admin_framework/internal/models/system"
 	"gin_vue_admin_framework/utils"
 )
@@ -23,4 +24,17 @@ func (ss SysService) GenerateCaptcha() (sc system.SysCaptchaModel, err error) {
 	sc = s_captcha
 	return
 
+}
+
+func (ss SysService) SystemSettingsSave(req *[]requests.SystemSettingsRequest) error {
+	var list []system.SystemSettingsModel
+	for _, item := range *req {
+		list = append(list, system.SystemSettingsModel{
+			SetKey:   item.SetKey,
+			SetValue: item.SetValue,
+		})
+	}
+
+	var systemSettings system.SystemSettingsModel
+	return systemSettings.SaveSysSettings(list)
 }
