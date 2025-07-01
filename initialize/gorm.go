@@ -38,7 +38,7 @@ func (m *MysqlDB) connect() *gorm.DB {
 		panic("Connect failed, check your database configuration. Error: " + err.Error())
 	}
 
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.SystemSettings{})
 	return db
 }
 

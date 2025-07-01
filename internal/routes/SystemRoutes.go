@@ -18,4 +18,9 @@ func (ur *SystemRouter) InitRouter(PublicRouter *gin.RouterGroup, PrivateRouter 
 		sysGroup.GET("get_captcha", systemController.GetCaptchaAction)
 	}
 
+	sysAuthGroup := PrivateRouter.Group("sys")
+	{
+		sysAuthGroup.POST("update_sys_settings", systemController.UpdateSysSettingsAction)
+	}
+
 }

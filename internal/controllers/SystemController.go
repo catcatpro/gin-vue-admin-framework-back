@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+	"gin_vue_admin_framework/internal/models/requests"
 	"gin_vue_admin_framework/internal/services"
 	"gin_vue_admin_framework/utils"
 	"github.com/gin-gonic/gin"
@@ -27,4 +29,22 @@ func (sc *SystemController) GetCaptchaAction(c *gin.Context) {
 		"captcha": s_captcha.Captcha,
 	})
 
+}
+
+func (controller *SystemController) UpdateSysSettingsAction(c *gin.Context) {
+	var err error
+	list := []requests.SystemSettingsRequest{}
+	err = c.ShouldBindBodyWithJSON(&list)
+	if err != nil {
+		utils.FailResponse(c, http.StatusBadRequest, "Parameter error", "")
+		return
+	}
+	fmt.Println("list", list[0].SetKey, list[0].SetValue)
+	err = services.SysService{}.SystemSettingsUpdate(&list)
+	fmt.Println("err", err)
+	if err != nil {
+		utils.FailResponse(c, http.StatusInternalServerError, "Server Error", "")
+		return
+	}
+	utils.SuccessResponse(c, gin.H{})
 }

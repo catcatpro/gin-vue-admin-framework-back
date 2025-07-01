@@ -79,3 +79,45 @@ func TestSysLogin(t *testing.T) {
 	}
 	defer res.Body.Close()
 }
+
+func TestSysUpdateSysSettings(t *testing.T) {
+	postData := make([]map[string]string, 0)
+	data1 := make(map[string]string)
+	data1["set_key"] = "sys_name"
+	data1["set_value"] = "gvaf"
+	postData = append(postData, data1)
+
+	jsonData, _ := json.Marshal(postData)
+	reqBody := strings.NewReader(string(jsonData))
+	fmt.Println("reqBody:", reqBody)
+	req, err := http.NewRequest("POST", "/sys/update_sys_settings", reqBody)
+	if err != nil {
+		t.Fatal("http.NewRequest error:", err)
+	}
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	rdb := common.COM_REDIS
+	if rdb == nil {
+		t.Error("rdb is nil")
+	}
+	ctx := context.Background()
+	token, err := rdb.Get(ctx, "x-header-token").Result()
+	if err != nil {
+		t.Error(err)
+	}
+	req.Header.Set("x-header-token", token)
+
+	rec := httptest.NewRecorder()
+
+	r.ServeHTTP(rec, req)
+	res := rec.Result()
+
+	defer res.Body.Close()
+
+	resBody, _ := io.ReadAll(res.Body)
+	resBodyString := string(resBody)
+	if res.StatusCode != http.StatusOK {
+		t.Fatalf("status code error,want %d,got %d, msg: %v", http.StatusOK, res.StatusCode, resBodyString)
+	}
+
+}
