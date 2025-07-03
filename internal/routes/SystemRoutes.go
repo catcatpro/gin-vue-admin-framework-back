@@ -21,6 +21,7 @@ func (ur *SystemRouter) InitRouter(PublicRouter *gin.RouterGroup, PrivateRouter 
 	sysAuthGroup := PrivateRouter.Group("sys")
 	{
 		sysAuthGroup.POST("update_sys_settings", systemController.UpdateSysSettingsAction)
+		sysAuthGroup.GET("get_sys_settings", systemController.GetSysSettingsAction)
 	}
 
 }

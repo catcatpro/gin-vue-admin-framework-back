@@ -31,6 +31,19 @@ func (sc *SystemController) GetCaptchaAction(c *gin.Context) {
 
 }
 
+// 获取系统设置
+func (sc *SystemController) GetSysSettingsAction(c *gin.Context) {
+	sysSettings, err := services.SysService{}.GetSystemSettings()
+	if err != nil {
+		fmt.Println("err2", err)
+		utils.FailResponse(c, http.StatusInternalServerError, "Server Error: ", "")
+		return
+	}
+
+	utils.SuccessResponse(c, sysSettings)
+}
+
+// 更新系统设置
 func (controller *SystemController) UpdateSysSettingsAction(c *gin.Context) {
 	var err error
 	list := []requests.SystemSettingsRequest{}
@@ -39,7 +52,7 @@ func (controller *SystemController) UpdateSysSettingsAction(c *gin.Context) {
 		utils.FailResponse(c, http.StatusBadRequest, "Parameter error", "")
 		return
 	}
-	fmt.Println("list", list[0].SetKey, list[0].SetValue)
+	fmt.Println("list", list)
 	err = services.SysService{}.SystemSettingsUpdate(&list)
 	fmt.Println("err", err)
 	if err != nil {

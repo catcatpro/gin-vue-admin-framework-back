@@ -6,6 +6,7 @@ import (
 )
 
 type SystemSettings struct {
+	Id       int    `json:"id" gorm:"primaryKey"`
 	SetKey   string `json:"set_key"  gorm:"NOT NULL"`
 	SetValue string `json:"set_value"  gorm:"NOT NULL"`
 }
@@ -24,4 +25,11 @@ func (sys_settings *SystemSettings) UpdateSysSettings(data []SystemSettings) err
 		}
 	}
 	return res.Error
+}
+
+// 获取系统设置
+func (sys_settings *SystemSettings) GetSysSettings() ([]SystemSettings, error) {
+	var systemSettings []SystemSettings
+	res := common.COM_DB.Find(&systemSettings)
+	return systemSettings, res.Error
 }

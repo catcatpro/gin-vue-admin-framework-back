@@ -39,3 +39,8 @@ func (ss SysService) SystemSettingsUpdate(req *[]requests.SystemSettingsRequest)
 	var systemSettings models.SystemSettings
 	return systemSettings.UpdateSysSettings(list)
 }
+
+func (ss SysService) GetSystemSettings() ([]models.SystemSettings, error) {
+	var systemSettings models.SystemSettings
+	return systemSettings.GetSysSettings()
+}
